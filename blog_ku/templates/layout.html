@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1, shrink-to-fit=no">
+
+  <!-- bootstrap CSS-->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+  <link rel="stylesheet" type="text/css" href="../templates/admin/admin.css">
+  <link rel="stylesheet" type="text/css" href="../static/fontawesome-free/css/all.min.css">
+
+  {% if title %}
+  <title>blogku -{{ title }}</title>
+  {% else %}
+  <title>blogku</title>
+  {% endif %}
+</head>
+
+<body>
+  <header class="site-header">
+    <nav class="navbar navbar-expand-md navbar-dark bg-danger fixed-top">
+      <div class="container">
+        <a class="nav-item nav-link" href="{{ url_for ('dashboard')}}"></a><i class="fas fa-user-edit mr-1"></i>Okhy</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle"
+          aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle novigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse ml-auto" id="navbarToggle">
+          <div class="navbar-nav mr-auto">
+            <a class="nav-item nav-link" href="{{ url_for ('home')}}"><i class="fas fa-home mr-1"></i>Home</a>
+            <a class="nav-item nav-link" href="{{ url_for ('about')}}"><i class="fas fa-address-card mr-1"></i>About</a>
+          </div>
+
+          <!-- Navbar Right Side -->
+          <div class="navbar-nav ml-auto">
+            {%if current_user.is_authenticated%}
+            <a class="nav-item nav-link" href="{{ url_for ('new_post')}}"><i class="fas fa-paper-plane mr-1"></i>New
+              Post</a>
+            <a class="nav-item nav-link" href="{{ url_for ('account')}}"><i
+                class="fas fa-user-circle mr-1"></i>Account</a>
+            <a class="nav-item nav-link" href="{{ url_for ('logout')}}"><i
+                class="fas fa-sign-out-alt mr-1"></i>Logout</a>
+            {%else%}
+            <a class="nav-item nav-link" href="{{ url_for ('login')}}"><i class="fas fa-sign-in-alt mr-1"></i>Login</a>
+            <a class="nav-item nav-link" href="{{ url_for ('registrasi')}}"><i
+                class="fas fa-registered mr-1"></i>Registered</a>
+            {%endif%}
+          </div>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <main role="main" class="container">
+    <div class="row">
+      <div class="col-md-8">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        {% for category, message in messages %}
+        <div class="alert alert-{{ category }}">
+          {{ message }}
+        </div>
+        {% endfor %}
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+      </div>
+      <div class="col-md-4" style="opacity: 0.8;">
+        <div class="content-section">
+          <h3>our Sidebar</h3>
+          <p class='text-muted'>You can put any information here you'd like.
+            <ul class="list-group">
+              <li class="list-group-item list-group-item-light">Latest Posts</li>
+              <li class="list-group-item list-group-item-light">Announcements</li>
+              <li class="list-group-item list-group-item-light">Calenders</li>
+              <li class="list-group-item list-group-item-light">etc</li>
+            </ul>
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Optional JavaScript -->
+  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="{{ url_for('static', filename='js/bootstrap.js') }}"></script>
+  <script type="text/javascript" src="admin.js"></script>
+</body>
+
+</html>
